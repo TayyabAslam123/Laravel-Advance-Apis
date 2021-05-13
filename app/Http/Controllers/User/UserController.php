@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use App\User;
+use App\Traits\ApiResponser;
 
-class UserController extends Controller
+class UserController extends ApiController
 {
+    use ApiResponser;
     /**
      * Display a listing of the resource.
      *
@@ -16,19 +18,21 @@ class UserController extends Controller
     public function index()
     {
         $users=User::all();
-        return response()->json(['message'=>'all users data received','data'=>$users],200);
+        $msg="Users data Fetched Successfully";
+        $code=200;
+        return $this->showall($msg,$users);
+        ### good response
+        //$users=User::all();
+        //$status=true;
+        //$msg="Users data Fetched Successfully";
+        //$code=200;
+        //return $this->successResponse(['status'=>$status,'message'=>$msg,'code'=>$code,'data'=>$users],$code);
+        #### good response
+     //   return $this->successResponse(['message'=>$msg,'data'=>$users],$code);
+      // return response()->json(['message'=>'all users data received','data'=>$users],200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
+  
     /**
      * Store a newly created resource in storage.
      *
@@ -37,6 +41,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+    
         $rules=[
             'name'=>'required',
             'email'=>'required|email|unique:users',
@@ -47,6 +52,7 @@ class UserController extends Controller
 
         $data=$request->all();
        
+  
         $data['password']=bcrypt($request->password);
         $data['verified']=User::UNVERIFIED;
         $data['verification_token']=User::generateVerificationCode();
@@ -69,7 +75,9 @@ class UserController extends Controller
     public function show($id)
     {
         $user=User::findorFail($id);
-        return response()->json(['message'=>'user data received','data'=>$user],200);
+        $msg="single User Data";
+        return $this->showone($msg,$user);
+       // return response()->json(['message'=>'user data received','data'=>$user],200);
     }
 
     /**
@@ -118,13 +126,14 @@ class UserController extends Controller
     
          if(!$user->isDirty()){
 
-            return response()->json(['message'=>'you need to 
-            specify a diffirent value to update','data'=>$user],422);
-         }
+           // return response()->json(['message'=>'you need to specify a diffirent value to update','data'=>$user],422);
+            return $this->errorResponse('you need to specify a diffirent value to update',409);
+        }
 
         $user->save();
-
-        return response()->json(['message'=>'user updated successfully','data'=>$user],201);
+        $msg="User has updated successfully ";
+        return $this->successResponse(['message'=>$msg,'data'=>$user],200); 
+       // return response()->json(['message'=>'user updated successfully','data'=>$user],201);
     }
 
     /**

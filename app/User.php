@@ -15,7 +15,7 @@ class User extends Authenticatable
     const UNVERIFIED='0';
 
     const ADMIN_USER='true';
-    const REGULAR_USER='false';
+    const REGULAR_USER='false'; 
 
     protected $table='users';
     /**
@@ -54,20 +54,23 @@ class User extends Authenticatable
 
 
     ##MUTATORS
-    // public function setNameAttribute($name){
-    //     return strtolower($name);
-    // }  
+    public function setNameAttribute($name){
+        $this->attributes['name'] = "ASPIRE:".$name;
+     }  
+
+    public function setEmailAttribute($email){
+        $this->attributes['email'] = strtolower($email);
+     }  
 
     ##ACCESSOR
     public function getNameAttribute($name){
-        return strtolower($name);
+        return strtoupper($name);
     }
   
-
-
-
-
-
+    public function getEmailAttribute($email){
+        return "mailto:".$email;
+    }
+    #####################################################################################################
     public function isVerified(){
          $this->verified==User::VERIFIED;
     }
