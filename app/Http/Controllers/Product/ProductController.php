@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Product;
+use App\Http\Controllers\ApiController;
 
-class ProductController extends Controller
+class ProductController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +16,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products=Product::all();
+        $msg="Products data Fetched Successfully";
+        $code=200;
+        return $this->showall($msg,$products); 
     }
 
     /**
@@ -44,9 +49,10 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Product $product)
     {
-        //
+        $msg="single Category Data";
+        return $this->showone($msg,$product);
     }
 
     /**
