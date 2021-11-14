@@ -19,7 +19,8 @@ class CategoryController extends ApiController
     public function index()
     {
         $categories=Category::all();
-        $msg="Categories data Fetched Successfully";
+        $count = count($categories);
+        $msg= $count.' Categories data Fetched Successfully';
         $code=200;
         return $this->showall($msg,$categories);
     }

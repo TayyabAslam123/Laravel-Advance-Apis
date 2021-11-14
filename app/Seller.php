@@ -8,7 +8,6 @@ class Seller extends User
     protected static function boot()
     {
         parent::boot();
-  
         static::addGlobalScope(new SellerScope);
     }
 

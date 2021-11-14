@@ -58,6 +58,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        ## Here we have use convertValidationExceptionToResponse() method
+        ## To customize the reponse , It will chenck the instance and if instance is present
+        ## it will response else wise // return parent::render($request, $exception); will
+        ## be called 
         //validator response
         if ($exception instanceof ValidationException) {
             return $this->convertValidationExceptionToResponse($exception, $request);

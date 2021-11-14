@@ -73,6 +73,7 @@ class User extends Authenticatable
     public function getEmailAttribute($email){
         return "mailto:".$email;
     }
+
     #####################################################################################################
     public function isVerified(){
          $this->verified==User::VERIFIED;

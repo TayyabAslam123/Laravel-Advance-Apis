@@ -18,7 +18,8 @@ class UserController extends ApiController
     public function index()
     {
         $users=User::all();
-        $msg="Users data Fetched Successfully";
+        $count=count($users);
+        $msg=$count." Users data Fetched Successfully";
         $code=200;
         return $this->showall($msg,$users);
         ### good response

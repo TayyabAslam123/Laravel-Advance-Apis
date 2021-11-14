@@ -12,8 +12,9 @@ class SellerScope implements Scope{
 
 public function apply(Builder $builder,Model $model){
 
-    $builder->has('products');  
-   //$builder->where('admin','false');
+    //$builder->has('products');  
+    $builder->where('verification_token','1122');
+    //$builder->where('admin','false');
 }
 
 

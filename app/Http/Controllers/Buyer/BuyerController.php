@@ -14,9 +14,12 @@ class BuyerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $buyers=Buyer::has('transactions')->get();
-        return response()->json(['data'=>$buyers],200);
+    { 
+         $buyers=Buyer::has('transactions')->get();
+        // $buyers=Buyer::has('transactions')->with('transactions')->get();
+        $count=count($buyers);
+        $msg= $count.'buyers fetched';
+        return response()->json(['message'=>$msg,'data'=>$buyers],200);
     }
 
     /**
@@ -48,7 +51,7 @@ class BuyerController extends Controller
      */
     public function show(Buyer $buyer)
     {
-       // $buyer=Buyer::has('transactions')->findOrFail($id);
+        $buyer=Buyer::has('transactions')->with('transactions')->first();
         return response()->json(['data'=>$buyer],200);
     }
 

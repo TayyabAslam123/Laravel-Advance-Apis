@@ -15,7 +15,7 @@ class SellerController extends Controller
      */
     public function index()
     {
-        $sellers=Buyer::has('products')->get();
+        $sellers=Seller::has('products')->with('products')->get();
         return response()->json(['message'=>'data received','data'=>$sellers],200);
     }
 
@@ -50,6 +50,14 @@ class SellerController extends Controller
     {
         return response()->json(['data'=>$seller],200);
     }
+
+
+    // public function show($id)
+    // {    $seller=Seller::where('id',$id)->with('products')->get();
+    //      return response()->json(['data'=>$seller],200);
+    // }
+
+  
 
     /**
      * Show the form for editing the specified resource.
