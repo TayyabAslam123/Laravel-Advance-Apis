@@ -16,10 +16,14 @@ class TransactionCategoryController extends ApiController
      * @return \Illuminate\Http\Response
      */
     public function index(Transaction $transaction)
-    {
+    { 
+        
         $categories=$transaction->product->categories;
         $msg="Transaction Categories data Fetched Successfully";
         return $this->showall($msg,$categories);
+         // $id required 
+        // $transaction_products = Transaction::whereId($id)->with('product.categories')->get();
+        // return response()->json(['message'=>'data received','data'=>$transaction_products],200);
 
     }
 

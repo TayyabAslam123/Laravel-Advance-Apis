@@ -54,6 +54,10 @@ class CategoryController extends ApiController
      */
     public function show(Category $category)
     {
+        // $Id is required
+        //$category=Category::whereId($id)->with('products')->get();
+        //return response()->json(['message'=>'data received','data'=>$category],200);
+             
         $msg="single Category Data";
         return $this->showone($msg,$category);
     }

@@ -17,7 +17,8 @@ class ProductController extends ApiController
     public function index()
     {
         $products=Product::all();
-        $msg="Products data Fetched Successfully";
+        $count =count($products);
+        $msg=$count." Products data Fetched Successfully";
         $code=200;
         return $this->showall($msg,$products); 
     }
@@ -51,6 +52,10 @@ class ProductController extends ApiController
      */
     public function show(Product $product)
     {
+        // $id should come for this
+        // $product = Product::whereId($id)->with('categories')->get();
+        // return response()->json(['message'=>'data received','data'=>$product],200);
+      
         $msg="single Category Data";
         return $this->showone($msg,$product);
     }
