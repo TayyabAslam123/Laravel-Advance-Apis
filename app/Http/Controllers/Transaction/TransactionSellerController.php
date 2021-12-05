@@ -20,6 +20,11 @@ class TransactionSellerController extends ApiController
         $msg="Transaction Seller data Fetched Successfully";
         return $this->showone($msg,$sellers);
 
+        // $id required 
+        // $transaction_products = Transaction::whereId($id)->with('product.seller')->get();
+        // return response()->json(['message'=>'data received','data'=>$transaction_products],200);
+
+
     }
 
     /**

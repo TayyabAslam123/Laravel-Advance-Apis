@@ -17,7 +17,7 @@ class TransactionCategoryController extends ApiController
      */
     public function index(Transaction $transaction)
     { 
-        
+        //$categories=$transaction->product()->with('categories')->get();
         $categories=$transaction->product->categories;
         $msg="Transaction Categories data Fetched Successfully";
         return $this->showall($msg,$categories);
