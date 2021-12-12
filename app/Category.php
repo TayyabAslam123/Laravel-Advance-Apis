@@ -14,6 +14,11 @@ class Category extends Model
         'description'
     ];
     
+    ##ACCESSOR
+    public function getNameAttribute($name){
+        $name='category-'.$name;
+        return strtoupper($name);
+    }
 
     public function products(){
         return $this->belongsToMany('App\Product');

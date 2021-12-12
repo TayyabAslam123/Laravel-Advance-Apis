@@ -24,6 +24,12 @@ class Product extends Model
 
     ];
 
+     ##ACCESSOR
+     public function getNameAttribute($name){
+        $name='product-'.$name;
+        return strtoupper($name);
+    }
+
     //check if product is available
     public function isAvailable(){
         return $this->status==Product::AVAILABLE;
