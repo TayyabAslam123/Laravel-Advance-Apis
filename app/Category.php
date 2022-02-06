@@ -13,6 +13,10 @@ class Category extends Model
         'name',
         'description'
     ];
+
+    protected $hidden = [
+        'pivot'
+    ];
     
     ##ACCESSOR
     public function getNameAttribute($name){

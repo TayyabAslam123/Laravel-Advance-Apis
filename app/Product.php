@@ -11,6 +11,7 @@ class Product extends Model
     use SoftDeletes;
     protected $dates=['deleted_at'];
 
+
     const AVAILABLE='available';
     const UNAVAILABLE='unavailable';
 
@@ -23,7 +24,10 @@ class Product extends Model
         'seller_id'
 
     ];
-
+    
+    protected $hidden = [
+        'pivot'
+    ];
      ##ACCESSOR
      public function getNameAttribute($name){
         $name='product-'.$name;

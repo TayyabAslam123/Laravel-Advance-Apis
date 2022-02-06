@@ -1,25 +1,30 @@
 <?php
 
-namespace App\Http\Controllers\Seller;
+namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
+use App\Product;
 use Illuminate\Http\Request;
-use App\Seller;
 
-class SellerController extends Controller
+class ProductCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        $sellers=Seller::has('products')->with('products')->get();
-        
-        return response()->json(['message'=>'data received','data'=>$sellers],200);
-    }
+        //change Product $product in argument , and below code inside function
+        //$categories = $product->categories;
+        // I have done this to get product with categories
 
+       
+        $categories = Product::where('id',$id)->with('categories')->get();
+        $msg = "product categories fetched";
+        return response()->json(['message'=>'data received','data'=>$categories],200);
+        return $this->showAll($msg,$categories);     
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -44,29 +49,21 @@ class SellerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Seller $seller)
+    public function show(Product $product)
     {
-        return response()->json(['data'=>$seller],200);
+        //
     }
-
-
-    // public function show($id)
-    // {    $seller=Seller::where('id',$id)->with('products')->get();
-    //      return response()->json(['data'=>$seller],200);
-    // }
-
-  
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Product $product)
     {
         //
     }
@@ -75,10 +72,10 @@ class SellerController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
         //
     }
@@ -86,10 +83,10 @@ class SellerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
         //
     }
