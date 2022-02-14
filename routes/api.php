@@ -38,6 +38,7 @@ Route::resource('products','Product\ProductController',['only'=>['index','show']
 Route::resource('products.transactions','Product\ProductTransactionController',['only'=>['index']]);
 Route::resource('products.buyers','Product\ProductBuyerController',['only'=>['index']]);
 Route::resource('products.categories','Product\ProductCategoryController');
+Route::resource('products.buyers.transactions','Product\ProductBuyerTransactionController',['only'=>['store']]);
 ##categories
 Route::resource('categories','Category\CategoryController',['except'=>['create','edit']]);
 Route::resource('categories.products','Category\CategoryProductController',['only'=>['index']]);

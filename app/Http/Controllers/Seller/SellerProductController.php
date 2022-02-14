@@ -7,6 +7,7 @@ use App\Seller;
 use App\User;
 use App\Product;
 use Exception;
+use Storage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 
@@ -53,7 +54,7 @@ class SellerProductController extends ApiController
         $data = $request->all();
 
         $data['status'] = Product::UNAVAILABLE;
-        $data['image'] = '1.jpg';
+        $data['image'] = $request->image->store('');
         $data['seller_id'] = $seller->id;
 
         $product = Product::create($data);
@@ -119,6 +120,11 @@ class SellerProductController extends ApiController
 
         }
 
+        if($request->hasfile('image')){
+            Storage::delete($product->image);
+            $product->image = $request->image->store('');
+        }
+
         if(!$product->isDirty()){
             return response()->json(['error'=>'You need to enter different values to update','code'=>422],200);
             // return $this->errorResponse('You need to enter different values to update',422);
@@ -140,6 +146,7 @@ class SellerProductController extends ApiController
     {
         $this->checkSeller($seller,$product);
         $product->delete();
+        Storage::delete($product->image);
         $msg = 'Product deleted';
         return $this->showone($msg,$product);
         

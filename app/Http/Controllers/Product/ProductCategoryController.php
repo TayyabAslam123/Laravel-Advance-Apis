@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
 use App\Product;
+use App\Category;
+use Exception;
 use Illuminate\Http\Request;
 
 class ProductCategoryController extends Controller
@@ -18,8 +20,6 @@ class ProductCategoryController extends Controller
         //change Product $product in argument , and below code inside function
         //$categories = $product->categories;
         // I have done this to get product with categories
-
-       
         $categories = Product::where('id',$id)->with('categories')->get();
         $msg = "product categories fetched";
         return response()->json(['message'=>'data received','data'=>$categories],200);
@@ -75,9 +75,12 @@ class ProductCategoryController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Product $product,Category $category)
     {
-        //
+        //attach , sync , syncwithoutdetaching
+       // $product->categories()->detach($category->id);
+        $product->categories()->syncwithoutdetaching([$category->id]);
+        return response()->json(['message'=>'Category added','data'=>$product->categories],200);
     }
 
     /**
@@ -86,8 +89,13 @@ class ProductCategoryController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy(Product $product, Category $category)
     {
-        //
+        if(!$product->categories()->find($category->id)){
+            return response()->json(['error'=>'The category and the product is not linked','code'=>422],200);
+        }
+        $product->categories()->detach([$category->id]);
+        return response()->json(['message'=>'Category Removed','data'=>$product->categories],200);
+        
     }
 }
