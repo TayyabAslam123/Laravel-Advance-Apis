@@ -27,6 +27,12 @@ class DatabaseSeeder extends Seeder
         Transaction::truncate();
         DB::table('category_product')->truncate();
         //
+        ## add this when a seeder is made no event get triggered i.e in app provider
+        User::fluchEventsListeners();
+        Category::fluchEventsListeners();
+        Product::fluchEventsListeners();
+        Transaction::fluchEventsListeners();
+        //
         factory(User::class,50)->create();
         factory(Category::class,10)->create();
         //

@@ -43,7 +43,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 
         'remember_token',
-        'verification_token'
+        // 'verification_token'
     ];
 
     /**
@@ -71,7 +71,8 @@ class User extends Authenticatable
     }
   
     public function getEmailAttribute($email){
-        return "mailto:".$email;
+        //return "mailto:".$email;
+        return $email;
     }
 
     #####################################################################################################

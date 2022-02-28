@@ -24,6 +24,10 @@ protected function showone($msg,Model $model,$code=200){
 }
 
 
+protected function showMessage($msg,$code=200){
+    return $this->successResponse(['data'=>$msg],$code);
+}
+
 
 }//
 
