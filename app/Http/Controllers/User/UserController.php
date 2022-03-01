@@ -5,8 +5,10 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use App\User;
+use App\Mail\UserMailChanged;
 use App\Traits\ApiResponser;
 use App\Mail\UserCreated;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends ApiController
 {
@@ -169,8 +171,11 @@ class UserController extends ApiController
             return $this->errorResponse('user already verified',409);
          
         }
-
-        Mail::to($user->email)->send(new UserCreated($user));
+        
+        retry(5 , function() use ($user){
+            Mail::to($user->email)->send(new UserCreated($user ,'Verify Your Email'));
+        } , 100);
+        
         return response()->json(['message'=>'mail sent','data'=>false],200);
 
 

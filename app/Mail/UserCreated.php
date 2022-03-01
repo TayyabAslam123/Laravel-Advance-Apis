@@ -19,10 +19,12 @@ class UserCreated extends Mailable
      */
 
     public $user;
+    public $subject;
 
-    public function __construct(User $user)
+    public function __construct(User $user , $subject)
     {
         $this->user = $user;
+        $this->subject = $subject;
     }
 
     /**
@@ -34,7 +36,7 @@ class UserCreated extends Mailable
     {
 
         //return $this->view('view.name');
-        return $this->text('email.welcome');
+        return $this->markdown('email.welcome')->subject($this->subject);
 
     }
 }

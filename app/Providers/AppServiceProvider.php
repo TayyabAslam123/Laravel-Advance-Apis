@@ -40,13 +40,22 @@ class AppServiceProvider extends ServiceProvider
 
         ## Send mail on new user
         User::created(function($user){
-            Mail::to($user->email)->send(new UserCreated($user));
+            retry(5 ,
+            function() use ($user){
+                Mail::to($user->email)->send(new UserCreated($user,'New User Created'));
+            }
+            , 100 );
+           
         }); 
 
-        ## Send mail on new user
+        ## Send mail on email update
         User::updated(function($user){
-            if(!$user->isDirty('email')){
-                Mail::to($user->email)->send(new UserMailChanged($user));
+            if($user->isDirty('email')){
+                retry(5 ,
+                 function() use ($user){
+                    Mail::to($user->email)->send(new UserMailChanged($user));
+                }
+                 , 100); 
             }
         }); 
 
