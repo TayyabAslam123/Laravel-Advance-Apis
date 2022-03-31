@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Transformers\CategoryTransformer;
 class Category extends Model
 {
     use SoftDeletes;
@@ -17,7 +18,7 @@ class Category extends Model
     protected $hidden = [
         'pivot'
     ];
-    
+    public $transformer = CategoryTransformer::class;
     ##ACCESSOR
     public function getNameAttribute($name){
         $name='category-'.$name;
