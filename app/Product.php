@@ -30,7 +30,7 @@ class Product extends Model
     ];
      ##ACCESSOR
      public function getNameAttribute($name){
-        $name='product-'.$name;
+        // $name='product-'.$name;
         return strtoupper($name);
     }
 
