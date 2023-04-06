@@ -20,7 +20,7 @@ class BuyerCategoryController extends ApiController
         ->with('product.categories')
         ->get()
         ->pluck('product.categories')
-        ->git ();
+        ->collapse();
         $msg = "data fetched";
         return $this->showall($msg,$sellers);
     }
